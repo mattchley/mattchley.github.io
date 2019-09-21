@@ -2,7 +2,7 @@
 
 body {
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	font-size: 18px;
+	font-size: 13px;
 	line-height: 34px;
 	color: #777;
 	background: url(../Images/trees.png);
@@ -15,9 +15,10 @@ body {
 .container {
 	width: 100%;
 	max-width: 960px;
-	margin: 0 auto;
+	margin:  auto;
 	clear: both;
 }
+
 h1,
 h2,
 h3,
@@ -38,7 +39,7 @@ h3 {
 }
 
 h1 {
-	padding-bottom: 20px;
+	padding: 20px;
 	font-size: 30px;
 	line-height: 49px;
 	border-bottom: 3px solid #ddd;
@@ -52,14 +53,15 @@ h3 {
 /* header */
 
 #masterhead {
-	position: fixed;
+	position: relative;
 	z-index: 99;
 	width: 100%;
-	margin: 0 0 30px;
+	margin: 0 0 px;
 	overflow: auto;
 	color:  #fff;
 	background: #fff;
 	border-bottom: 2px solid #ccc;
+	top: 0;
 }
 
 #logo {
@@ -94,7 +96,9 @@ nav a {
 /* footer */
 
 footer {
-	padding: 30px 0;
+	position: relative;
+	width: 100%;
+	padding: 20px 0;
 	clear: both;
 	font-size: 12px;
 	color: #fff;
@@ -102,18 +106,20 @@ footer {
 	text-align: center;
 	background: #666;
 	border-top: 8px solid #4aaaa5;
+	bottom: 0;
 }
 
 /* main */
 
 #main-container {
-	padding-top: 130px;
+	margin-top: 60px;
+	margin-bottom: 60px;
 }
 
 .projects {
 	width: 960px;
 	max-width: 960px;
-	margin: 40px auto;
+	margin: auto;
 	background: #fff;
     border: 1px solid #ddd;
     overflow: auto;
@@ -122,10 +128,14 @@ footer {
 /* portfolio page */
 
 .examples {
-	flex-direction: column;
-	width: 274px;
+	display: flex;
+	flex-wrap: wrap;
 	margin: 20px 0 25px;
 	overflow: auto;
+}
+
+.examples > div{
+	width: 50%;
 }
 
 /* contact page */
