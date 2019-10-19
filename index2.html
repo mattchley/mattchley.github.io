@@ -107,7 +107,7 @@
             // Get saved content
             function storedPlans() {
                 // Stringify and set "todos" key in localStorage to todos array
-                localStorage.setItem("plans");
+                localStorage.setItem("plans", JSON.stringify(plans));
             };
 
             function colortimes() {
