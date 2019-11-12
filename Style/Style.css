@@ -1,0 +1,115 @@
+/* General */
+*{
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+h1{
+  color: #4aaaa5;
+  border-bottom: 3px solid #ddd;
+}
+body{
+  color: #777777;
+  background: url(../Images/trees.png);
+}
+
+.container{
+  background-color: #ffffff;
+  width: 960px;
+  margin:  auto;
+	clear: both;
+}
+
+#Content{
+  padding: 30px;
+}
+
+/* Header */
+.top{
+  background-color: #ffffff;
+  padding: 30px;
+  border-bottom: 3px solid #ddd;
+}
+
+.logo{
+  color: #ffffff;
+  background-color: #4aaaa5;
+  font-family: 'Georgia', Times, 'Times New Roman', serif;
+}
+
+header{
+  position: relative;
+  top: 0;
+  max-width: 100%;
+}
+
+.navigator{
+  justify-content:flex-end;
+}
+
+.nav-link { 
+  display: inline-block;
+	padding-left: 15px;
+	margin-left: 15px;
+	line-height: 18px;
+	color: #777777;
+	text-decoration: none;
+	border-left: 1px solid #efefef;
+ }
+
+
+/* Footer */
+.foot{
+  background-color: #666666;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+  color: #ffffff;
+  border-top: 8px solid #4aaaa5;
+  position: sticky;
+  bottom: 0;
+  margin-top: 40px;
+}
+
+/* Portfolio Pics */
+.card{
+  margin: 10px;
+}
+.card-body{
+  background-color: #4aaaa5;
+  text-align: center;
+  position: relative;
+  bottom: 15px;
+}
+
+.card-text{
+  color: #ffffff;
+}
+
+/* Contact */
+
+#exampleFormControlInput3{
+  height: 200px;
+}
+#submitbtn{
+  background-color: #4aaaa5;
+  padding: 10px;
+  width: 100px;  
+  border: 3px solid #ddd;
+
+}
+form{
+  padding: 10px;
+}
+ 
+/* Additional Screen Sizes */
+
+/* 980 */
+@media screen and (max-width: 980px) {
+
+}
+/* 768 */
+@media screen and (max-width: 768px) {
+
+}
+/* 640 */
+@media screen and (max-width: 640px) {
+
+}
