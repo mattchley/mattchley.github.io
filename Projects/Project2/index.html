@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New York Times Search</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+</head>
+
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Weather Dashboard</span>
+</nav>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class='col-3'>
+                Search for a city:
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" id='city-input' type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="city-search" type="submit">City
+                        Name</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="reset" type="submit">Clear</button>
+                </form>
+                <ul id='city-list'></ul>
+            </div>
+            <div class="col-9 main">
+                <div class="jumbotron">
+                    <h1 id="main-title" class="display-4">Welcome!</h1>
+                    <image id='main-image'></image>
+                    <p id="main-temp" class="lead">Type in the city name you'd like to see.</p>
+                    <p id="main-humidity" class="lead"></p>
+                    <p id="main-wind" class="lead"></p>
+                    <p id="main-UV" class="lead"></p>
+                </div>
+                <div id="5-day-content" class="row">
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- Code to the JavaScript File -->
+    <script text="text/javascript">
+        // Variables
+        var m = moment();
+        var date = m.format('l')
+        var citysearch = $('#city-search')
+        var cityInput = $('#city-input')
+        var citylist = $('#city-list')
+        var cities = [];
+
+        // Main Content in Jumbotron
+        var mainWeatherTitle = $('#main-title')
+        var mainWeatherImage = $('#main-image')
+        var mainWeatherTemp = $('#main-temp')
+        var mainWeatherHumidity = $('#main-humidity')
+        var mainWeatherWind = $('#main-wind')
+        var mainWeatherUV = $('#main-UV')
+
+        function renderMainData(city) {
+            var APIKey = "3a92bc0a0ca29575a3569a00c0268022";
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+                "q=" + city + "&units=imperial&APPID=" + APIKey;
+            $.ajax({
+
+                url: queryURL,
+                method: "GET"
+            })
+                .then(function (response) {
+
+                    // Log the queryURL
+                    console.log(queryURL);
+
+                    // Log the resulting object
+                    console.log(response);
+
+                    // Main content variables here
+                    var main = response.name;
+                    var mainTemp = response.main.temp;
+                    var mainHumidity = response.main.humidity;
+                    var mainWind = response.wind.speed;
+                    var iconImage = response.weather[0].icon;
+                    var iconURL = "https://openweathermap.org/img/w/" + iconImage + ".png";
+
+                    //    UV is a seperate call, Variables here
+                    var lat = response.coord.lat;
+                    var lon = response.coord.lon;
+                    var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=3a92bc0a0ca29575a3569a00c0268022" + "&lat=" + lat + "&lon=" + lon;
+
+                    // Generate content
+
+                    mainWeatherTitle.text(main + " " + "(" + date + ")");
+                    mainWeatherImage.attr("src", iconURL)
+                    mainWeatherTemp.text('Temp: ' + mainTemp + 'F');
+                    mainWeatherHumidity.text('Humidity: ' + mainHumidity + '%');
+                    mainWeatherWind.text('Wind Speed: ' + mainWind + 'MPH');
+
+                    $.ajax({
+
+                        url: uvURL,
+                        method: "GET"
+                    })
+                        .then(function (response) {
+
+                            var uvResult = response.value;
+                            mainWeatherUV.text('UV Index: ' + uvResult);
+                            console.log(response)
+                        })
+                });
+
+
+        }
+
+
+        function renderFiveDay(city) {
+            var APIKey = "3a92bc0a0ca29575a3569a00c0268022";
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+                "q=" + city + "&units=imperial&APPID=" + APIKey;
+            $.ajax({
+
+                url: queryURL,
+                method: "GET"
+            })
+                .then(function (response) {
+                    var lat = response.coord.lat;
+                    var lon = response.coord.lon;
+                    var fiveDayContent = $("#5-day-content")
+
+                    var fiveURL = "https://api.openweathermap.org/data/2.5/forecast?appid=3a92bc0a0ca29575a3569a00c0268022&" + "&lat=" + lat + "&lon=" + lon + "&units=imperial";
+                    $.ajax({
+
+                        url: fiveURL,
+                        method: "GET"
+                    })
+                        .then(function (response) {
+                            console.log(response)
+                            var fiveDayData = response.list
+                            for (i = 0; i < fiveDayData.length; i += 8) {
+                            
+                                var data = response.list[i]
+                                var fiveDayTitle = $('<h5>');
+                                var fiveDayIcon = $('<img>')
+                                var fiveDayTemp = $('<p>');
+                                var fiveDayHumidity = $('<p>');
+                                var col = $('<div>')
+                                var card = $('<div>')
+                                var iconImage = response.list[i].weather[0].icon;
+                                var iconURL = "https://openweathermap.org/img/w/" + iconImage + ".png";
+
+                                fiveDayIcon.attr("src", iconURL)
+                                col.attr('class', 'col-2')
+                                card.attr('class', 'card')
+
+                                fiveDayTitle.text(response.list[i].dt_txt)
+                                fiveDayTemp.text('Temp: ' + response.list[i].main.temp + 'F')
+                                fiveDayHumidity.text('Humidity: ' + response.list[i].main.humidity + '%')
+                                col.empty();
+                                card.append(fiveDayTitle)
+                                card.append(fiveDayIcon)
+                                card.append(fiveDayTemp)
+                                card.append(fiveDayHumidity)
+
+                                col.append(card)
+                                fiveDayContent.append(col)
+                                console.log(fiveDayData.length)
+                                
+
+                            }
+
+
+
+                        })
+                })
+
+
+        }
+
+
+        function storeCities() {
+            // Stringify and set "cities" key in localStorage to cities array
+            localStorage.setItem("cities", JSON.stringify(cities));
+        }
+
+        function renderStoredCity() {
+            var kitchen = JSON.parse(localStorage.getItem('cities'))
+            // Render a new li for each todo
+            console.log("retrieved cities: ",kitchen)
+            var li = $('<li>');
+                li.text(kitchen[kitchen.length - 1]);
+                citylist.prepend(li);
+        }
+        $("#city-search").on("click", function (event) {
+            event.preventDefault();
+            var cityText = cityInput.val();
+            if (cityText === "") {
+                return;
+            }
+            cities.push(cityText)
+            cityInput.val();
+            storeCities();
+            renderStoredCity();
+            renderMainData(cityText);
+            renderFiveDay(cityText);
+        });
+        $('#reset').on('click', function (event) {
+            $('#5-day-content').remove();
+        });
+
+    </script>
+
+</body>
+
+</html>
